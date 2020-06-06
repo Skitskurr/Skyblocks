@@ -1,0 +1,36 @@
+main: com.skitskurr.skyblocks.Main
+name: Skyblocks
+version: 1.0
+description: The Skyblocks core plugin.
+api-version: 1.15
+author: Skitskurr
+depend: [MenuManager, DataManager]
+
+commands:
+  hub:
+    description: enter the hub
+    usage: /<command>
+  island:
+    description: opens the island menu
+    usage: /<command>
+  setspawn:
+    description: sets the spawn of the island you're in
+    usage: /<command>
+  join:
+    description: join another player
+    usage: /<command> [player]
+  tpa:
+    description: sends a teleport request to a player
+    usage: /<command> [player]
+  tpaccept:
+    description: accepts a teleport request from a player
+    usage: /<command> [player]
+  trade:
+    description: sends a trade request to a player
+    usage: /<command> [player]
+  tradeaccept:
+    description: accepts a trade request from a player
+    usage: /<command> [player]
+  slimemap:
+    description: opens a map of slime chunks of your current world
+    usage: /<command>
