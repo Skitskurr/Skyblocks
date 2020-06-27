@@ -28,7 +28,7 @@ import com.skitskurr.skyblocks.results.WanderingTraderRecipe;
 import com.skitskurr.skyblocks.title.TitleManager;
 import com.skitskurr.skyblocks.utils.MetadataUtils;
 
-import net.minecraft.server.v1_15_R1.MinecraftServer;
+import net.minecraft.server.v1_16_R1.MinecraftServer;
 
 public class EventListener implements Listener{
 	

@@ -2,7 +2,7 @@ main: com.skitskurr.skyblocks.Main
 name: Skyblocks
 version: 1.0
 description: The Skyblocks core plugin.
-api-version: 1.15
+api-version: 1.16
 author: Skitskurr
 depend: [MenuManager, DataManager]
 

@@ -11,7 +11,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Levelled;
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftBlockInventoryHolder;
+import org.bukkit.craftbukkit.v1_16_R1.inventory.CraftBlockInventoryHolder;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
