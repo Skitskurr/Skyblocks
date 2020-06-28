@@ -8,6 +8,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Levelled;
@@ -225,8 +226,9 @@ public class IslandEventListener implements Listener{
 		
 		final Location from = event.getFrom();
 		final World worldFrom = from.getWorld();
-		final String prefixFrom = IslandManager.getPrefix(worldFrom.getEnvironment());
-		final String prefixTo = IslandManager.getPrefix(event.getTo().getWorld().getEnvironment());
+		final Environment environmentFrom = worldFrom.getEnvironment();
+		final String prefixFrom = IslandManager.getPrefix(environmentFrom);
+		final String prefixTo = IslandManager.getPrefix(environmentFrom == Environment.NORMAL ? Environment.NETHER : Environment.NORMAL);
 		
 		final World worldTo = Bukkit.getWorld(worldFrom.getName().replace(prefixFrom, prefixTo));
 		

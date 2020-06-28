@@ -2,6 +2,7 @@ package com.skitskurr.skyblocks.island;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.skitskurr.datamanager.DataManager;
 import com.skitskurr.menumanager.utils.MetadataUtils;
 import com.skitskurr.skyblocks.Main;
+import com.skitskurr.skyblocks.exceptions.WorldFileNotFoundException;
 
 public class IslandManager {
 	
@@ -109,23 +111,38 @@ public class IslandManager {
 		}
 		
 		World world = Bukkit.getWorld(IslandManager.WORLD_DIR + getPrefix(Environment.NORMAL) + id);
-		if(world == null) {
-			for(final Environment environment: data.getType().getEnvironments()) {
-				final String dir = IslandManager.WORLD_DIR + getPrefix(environment) + id;
-				final File file = new File(dir);
-				if(!file.exists()) {
-					player.sendMessage(ChatColor.RED + "There was an unexpected error while loading your island.");
-					return;
-				}
-				if(environment == Environment.NORMAL) {
-					world = new WorldCreator(dir).createWorld();
-				} else {
-					new WorldCreator(dir).environment(environment).createWorld();
-				}
+		if(world == null) {			
+			try {
+				world = loadWorlds(data).get(0);
+			}catch(final WorldFileNotFoundException ex) {
+				player.sendMessage(ChatColor.RED + "ERROR: Your world seems to be missing files.");
+				return;
 			}
 		}
 		
 		player.teleport(world.getSpawnLocation());
+	}
+	
+	private static List<World> loadWorlds(final IslandData data) throws WorldFileNotFoundException{
+		final Environment[] environments = data.getType().getEnvironments();
+		final List<World> worlds = new ArrayList<World>(environments.length);
+		final String id = data.getId();
+		
+		for(final Environment environment: environments) {
+			final String dir = IslandManager.WORLD_DIR + getPrefix(environment) + id;
+			final File file = new File(dir);
+			if(!file.exists()) {
+				for(final World world: worlds) {
+					Bukkit.unloadWorld(world, false);
+				}
+				throw new WorldFileNotFoundException(dir);
+			}
+			final World world = new WorldCreator(dir).environment(environment).createWorld();
+			world.setKeepSpawnInMemory(false);
+			worlds.add(world);
+		}
+		
+		return worlds;
 	}
 	
 	public static void enterHub(final Player player) {
