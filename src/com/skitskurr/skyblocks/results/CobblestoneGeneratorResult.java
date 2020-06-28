@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 
-public enum GeneratorResult {
+public enum CobblestoneGeneratorResult {
 	// "classic" Skyblock results
 	COAL("Coal", Material.COAL, Material.COAL_ORE, 1000, 100, defaultBiomes()),
 	IRON("Iron", Material.IRON_INGOT, Material.IRON_ORE, 500, 50, defaultBiomes()),
@@ -53,7 +53,7 @@ public enum GeneratorResult {
 	private final int chancePerLevel;
 	private final Biome[] biomes;
 	
-	private GeneratorResult(final String name, final Material icon, final Material result, final int baseChance, final int chancePerLevel, final Biome[] biomes){
+	private CobblestoneGeneratorResult(final String name, final Material icon, final Material result, final int baseChance, final int chancePerLevel, final Biome[] biomes){
 		this.name = name;
 		this.icon = icon;
 		this.result = result;
@@ -62,7 +62,7 @@ public enum GeneratorResult {
 		this.biomes = biomes;
 	}
 	
-	private GeneratorResult(final String name, final Material type, final int baseChance, final int chancePerLevel, final Biome[] biomes){
+	private CobblestoneGeneratorResult(final String name, final Material type, final int baseChance, final int chancePerLevel, final Biome[] biomes){
 		this.name = name;
 		this.icon = type;
 		this.result = type;
@@ -71,7 +71,7 @@ public enum GeneratorResult {
 		this.biomes = biomes;
 	}
 	
-	private GeneratorResult(final String name, final Material icon, final Material result, final int baseChance, final int chancePerLevel, final Biome biome) {
+	private CobblestoneGeneratorResult(final String name, final Material icon, final Material result, final int baseChance, final int chancePerLevel, final Biome biome) {
 		this.name = name;
 		this.icon = icon;
 		this.result = result;
@@ -80,7 +80,7 @@ public enum GeneratorResult {
 		this.biomes = new Biome[] {biome};
 	}
 	
-	private GeneratorResult(final String name, final Material type, final int baseChance, final int chancePerLevel, final Biome biome) {
+	private CobblestoneGeneratorResult(final String name, final Material type, final int baseChance, final int chancePerLevel, final Biome biome) {
 		this.name = name;
 		this.icon = type;
 		this.result = type;

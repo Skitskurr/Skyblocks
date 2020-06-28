@@ -18,8 +18,9 @@ import org.bukkit.inventory.ItemStack;
 
 import com.skitskurr.datamanager.DataManager;
 import com.skitskurr.skyblocks.Main;
+import com.skitskurr.skyblocks.results.BasaltGenerator;
+import com.skitskurr.skyblocks.results.CobblestoneGenerator;
 import com.skitskurr.skyblocks.results.Composter;
-import com.skitskurr.skyblocks.results.Generator;
 import com.skitskurr.skyblocks.utils.ItemUtils;
 
 import net.md_5.bungee.api.ChatColor;
@@ -61,7 +62,8 @@ public class IslandData {
 	private final List<UUID> memberIDs;
 	private final Map<UUID, Integer> ranks = new HashMap<>();
 	
-	private final Map<Biome, Generator> generators = new HashMap<>();
+	private final Map<Biome, CobblestoneGenerator> cobblestoneGenerators = new HashMap<>();
+	private final Map<Biome, BasaltGenerator> basaltGenerators = new HashMap<>();
 	private final Map<Biome, Composter> composters = new HashMap<>();
 	private final Set<UUID> invited = new HashSet<>();
 	
@@ -96,12 +98,20 @@ public class IslandData {
 		return ItemUtils.newItem(this.type.getIcon(), this.name);
 	}
 	
-	public Material generateBlock(final Biome biome) {
-		if(!generators.containsKey(biome)) {
-			generators.put(biome, new Generator(biome));
+	public Material generateCobblestoneResult(final Biome biome) {
+		if(!cobblestoneGenerators.containsKey(biome)) {
+			cobblestoneGenerators.put(biome, new CobblestoneGenerator(biome));
 		}
 		
-		return generators.get(biome).generate();
+		return cobblestoneGenerators.get(biome).generate();
+	}
+	
+	public Material generateBasaltResult(final Biome biome) {
+		if(!basaltGenerators.containsKey(biome)) {
+			basaltGenerators.put(biome, new BasaltGenerator(biome));
+		}
+		
+		return basaltGenerators.get(biome).generate();
 	}
 	
 	public Material compostBlock(final Biome biome) {

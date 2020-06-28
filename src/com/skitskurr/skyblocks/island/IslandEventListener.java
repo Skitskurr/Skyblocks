@@ -64,13 +64,20 @@ public class IslandEventListener implements Listener{
 	 */
 	@EventHandler(ignoreCancelled = true)
 	public void onGenerate(final BlockFormEvent event) {
-		if(!(event.getNewState().getType() == Material.COBBLESTONE)) {
-			return;
+		switch(event.getNewState().getType()) {
+		case COBBLESTONE:
+			final Block cobblestone = event.getBlock();
+			MetadataUtils.getMetadata(this.plugin, cobblestone.getWorld(), IslandData.METADATA_KEY_ISLAND_DATA, IslandData.class)
+			.ifPresent(data -> event.getNewState().setType(data.generateCobblestoneResult(cobblestone.getBiome())));
+			break;
+		case BASALT:
+			final Block basalt = event.getBlock();
+			MetadataUtils.getMetadata(this.plugin, basalt.getWorld(), IslandData.METADATA_KEY_ISLAND_DATA, IslandData.class)
+			.ifPresent(data -> event.getNewState().setType(data.generateBasaltResult(basalt.getBiome())));
+			break;
+		default:
+			break;
 		}
-		
-		final Block block = event.getBlock();
-		MetadataUtils.getMetadata(this.plugin, block.getWorld(), IslandData.METADATA_KEY_ISLAND_DATA, IslandData.class)
-		.ifPresent(data -> event.getNewState().setType(data.generateBlock(block.getBiome())));
 	}
 	
 	/**

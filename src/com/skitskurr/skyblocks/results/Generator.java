@@ -1,19 +1,16 @@
 package com.skitskurr.skyblocks.results;
 
-import java.util.Arrays;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import org.bukkit.Material;
-import org.bukkit.block.Biome;
 
-public class Generator {
+public abstract class Generator {
 	
-	private static class Result{
+	protected static class Result{
 		private final int likelihood;
 		private final Material type;
 		
-		private Result(final int likelihood, final Material type) {
+		protected Result(final int likelihood, final Material type) {
 			this.likelihood = likelihood;
 			this.type = type;
 		}
@@ -23,13 +20,9 @@ public class Generator {
 	private final Material[] defaults;
 	private final Result[] results;
 	
-	public Generator(final Biome biome) {
-		this.defaults = GeneratorResult.getDefaultResult(biome);
-		
-		this.results = Arrays.stream(GeneratorResult.values())
-				.filter(result -> result.isApplicable(biome))
-				.map(result -> new Result(result.getChance(0), result.getResult()))
-				.collect(Collectors.toList()).toArray(new Result[0]);
+	public Generator(final Material[] defaults, final Result[] results) {
+		this.defaults = defaults;
+		this.results = results;
 	}
 	
 	public Material generate() {

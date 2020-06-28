@@ -137,9 +137,7 @@ public class IslandManager {
 				}
 				throw new WorldFileNotFoundException(dir);
 			}
-			final World world = new WorldCreator(dir).environment(environment).createWorld();
-			world.setKeepSpawnInMemory(false);
-			worlds.add(world);
+			worlds.add(new WorldCreator(dir).environment(environment).createWorld());
 		}
 		
 		return worlds;
