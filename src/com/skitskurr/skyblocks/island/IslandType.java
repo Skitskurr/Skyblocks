@@ -1,5 +1,8 @@
 package com.skitskurr.skyblocks.island;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Biome;
@@ -9,6 +12,7 @@ import com.skitskurr.skyblocks.utils.ItemUtils;
 
 public enum IslandType {
 	CLASSIC("Classic Island", Material.GRASS_BLOCK, "has a generator", 1, false, false, Biome.PLAINS, "classic", Environment.NORMAL),
+	FOUR_SEASONS("Four Seasons", Material.MYCELIUM, "special generator results", 1, false, false, new Biome[] {Biome.DESERT, Biome.OCEAN, Biome.SNOWY_TAIGA, Biome.JUNGLE}, "fourSeasons", Environment.NORMAL),
 	FROZEN("Frozen Island", Material.SNOW_BLOCK, "it's cold", 1, false, false, Biome.SNOWY_TUNDRA, "frozen", Environment.NORMAL),
 	DROUGHT("Drought Island", Material.SAND, "desert generator results", 1, false, false, Biome.DESERT, "drought", Environment.NORMAL),
 	NETHER_GATE("Nether Gate Island", Material.NETHERRACK, "allows Nether Portals", 1, false, true, Biome.NETHER_WASTES, "netherGate", new Environment[] {Environment.NORMAL, Environment.NETHER}),
@@ -25,7 +29,7 @@ public enum IslandType {
 	private final int price;
 	private final boolean allowZombieVillager;
 	private final boolean allowNether;
-	private final Biome biome;
+	private final Biome[] biomes;
 	private final String fileSuffix;
 	private final Environment[] environments;
 	
@@ -36,9 +40,21 @@ public enum IslandType {
 		this.price = price;
 		this.allowZombieVillager = allowZombieVillager;
 		this.allowNether = allowNether;
-		this.biome = biome;
+		this.biomes = new Biome[] {biome};
 		this.fileSuffix = fileSuffix;
 		this.environments = environments;
+	}
+	
+	private IslandType(final String name, final Material icon, final String specialty, final int price, final boolean allowZombieVillager, final boolean allowNether, final Biome[] biomes, final String fileSuffix, final Environment environment) {
+		this.name = name;
+		this.icon = icon;
+		this.specialty = specialty;
+		this.price = price;
+		this.allowZombieVillager = allowZombieVillager;
+		this.allowNether = allowNether;
+		this.biomes = biomes;
+		this.fileSuffix = fileSuffix;
+		this.environments = new Environment[] {environment};
 	}
 	
 	private IslandType(final String name, final Material icon, final String specialty, final int price, final boolean allowZombieVillager, final boolean allowNether, final Biome biome, final String fileSuffix, final Environment environment) {
@@ -48,7 +64,7 @@ public enum IslandType {
 		this.price = price;
 		this.allowZombieVillager = allowZombieVillager;
 		this.allowNether = allowNether;
-		this.biome = biome;
+		this.biomes = new Biome[] {biome};
 		this.fileSuffix = fileSuffix;
 		this.environments = new Environment[] {environment};
 	}
@@ -82,15 +98,32 @@ public enum IslandType {
 	}
 	
 	public ItemStack toShopItem() {
-		return ItemUtils.newItem(this.icon, this.name, biomeLore(), specialtyLore(), priceLore());
+		final List<String> lore = new ArrayList<>();
+		addBiomeLore(lore);
+		lore.add(specialtyLore());
+		lore.add(priceLore());
+		
+		return ItemUtils.newItem(this.icon, this.name, lore);
 	}
 	
-	private String biomeLore() {
-		final String[] split = this.biome.toString().split("_");
-		for(int i = 0; i < split.length; i++) {
-			split[i] = split[i].substring(0, 1) + split[i].substring(1).toLowerCase();
+	private void addBiomeLore(final List<String> lore) {
+		if(this.biomes.length == 1) {
+			lore.add("§7noteworthy biome: §8" + biomeText(this.biomes[0]));
+			return;
+		} else {
+			lore.add("§7noteworthy biomes: §8" + biomeText(this.biomes[0]) + "§7,");
 		}
-		return "§7noteworthy biome: §8" + String.join(" ", split);
+		
+		final String biomeNames[] = new String[this.biomes.length - 1];
+		for(int i = 1; i < this.biomes.length; i++) {
+			final String[] split = this.biomes[i].toString().split("_");
+			for(int j = 0; j < split.length; j++) {
+				split[j] = split[j].substring(0, 1) + split[j].substring(1).toLowerCase();
+			}
+			biomeNames[i - 1] = biomeText(this.biomes[i]);
+		}
+		
+		lore.add(String.join("§7, ", biomeNames));
 	}
 	
 	private String specialtyLore() {
@@ -99,5 +132,13 @@ public enum IslandType {
 	
 	private String priceLore() {
 		return "§7price: §8" + this.price + " §7Emeralds";
+	}
+	
+	private static String biomeText(final Biome biome) {
+		final String[] split = biome.toString().split("_");
+		for(int i = 0; i < split.length; i++) {
+			split[i] = split[i].substring(0, 1) + split[i].substring(1).toLowerCase();
+		}
+		return "§8" + String.join(" ", split);
 	}
 }
