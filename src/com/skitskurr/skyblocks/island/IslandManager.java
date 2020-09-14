@@ -1,7 +1,6 @@
 package com.skitskurr.skyblocks.island;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -24,6 +23,7 @@ import com.skitskurr.datamanager.DataManager;
 import com.skitskurr.menumanager.utils.MetadataUtils;
 import com.skitskurr.skyblocks.Main;
 import com.skitskurr.skyblocks.exceptions.WorldFileNotFoundException;
+import com.skitskurr.skyblocks.utils.JarUtils;
 
 public class IslandManager {
 	
@@ -62,11 +62,7 @@ public class IslandManager {
 				final String suffix = type.getFileSuffix();
 				for(final Environment environment: type.getEnvironments()) {
 					final String prefix = getPrefix(environment);
-					final File source = new File(IslandManager.ISLAND_DIR + prefix + suffix);
-					final File destination = new File(IslandManager.WORLD_DIR + prefix + id);
-					try {
-						FileUtils.copyDirectory(source,  destination);
-					} catch(final IOException ex) {
+					if(!JarUtils.copyFolder(IslandManager.ISLAND_DIR + prefix + suffix, IslandManager.WORLD_DIR + prefix + id)) {
 						player.sendMessage(ChatColor.RED + "There was an unexpected error while creating your island.");
 					}
 				}
