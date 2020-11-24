@@ -28,7 +28,7 @@ import com.versuchdrei.skyblocks.results.WanderingTraderRecipe;
 import com.versuchdrei.skyblocks.title.TitleManager;
 import com.versuchdrei.skyblocks.utils.MetadataUtils;
 
-import net.minecraft.server.v1_16_R1.MinecraftServer;
+import net.minecraft.server.v1_16_R3.MinecraftServer;
 
 public class EventListener implements Listener{
 	
