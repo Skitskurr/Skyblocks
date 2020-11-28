@@ -135,7 +135,7 @@ public class IslandEventListener implements Listener{
 		event.setCancelled(true);
 		levelled.setLevel(0);
 		block.setBlockData(levelled);
-		block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 1, 0.5), new ItemStack(optionalData.get().compostBlock(block.getBiome())));
+		block.getWorld().dropItem(block.getLocation().add(0.5, 1, 0.5), new ItemStack(optionalData.get().compostBlock(block.getBiome())));
 	}
 	
 	@EventHandler(ignoreCancelled = true)

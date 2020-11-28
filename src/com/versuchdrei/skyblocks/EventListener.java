@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -28,6 +27,7 @@ import com.versuchdrei.skyblocks.results.WanderingTraderRecipe;
 import com.versuchdrei.skyblocks.title.TitleManager;
 import com.versuchdrei.skyblocks.utils.MetadataUtils;
 
+import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_16_R3.MinecraftServer;
 
 public class EventListener implements Listener{
@@ -43,9 +43,11 @@ public class EventListener implements Listener{
 	@EventHandler
 	public void onJoin(final PlayerJoinEvent event) {
 		final Player player = event.getPlayer();
-		player.teleport(Bukkit.getWorld("world").getSpawnLocation());
 		
 		TitleManager.loadTitles(this.plugin, player, () -> IslandManager.createIsland(this.plugin, player, IslandType.CLASSIC));
+		
+		IslandManager.loadDefaultIsland(player);
+		IslandManager.enterDefaultOrHub(player);
 		
 		player.sendMessage("Welcome, use /island to manage your islands.");
 	}
@@ -99,6 +101,10 @@ public class EventListener implements Listener{
 		}
 			
 		trader.setRecipes(trades);
+		
+		for(final Player player: trader.getWorld().getPlayers()) {
+			player.sendMessage(ChatColor.YELLOW + "A Wandering Trader is visiting your island!");
+		}
 	}
 
 }

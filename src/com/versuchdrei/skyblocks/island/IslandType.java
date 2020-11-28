@@ -11,16 +11,15 @@ import org.bukkit.inventory.ItemStack;
 import com.versuchdrei.skyblocks.utils.ItemUtils;
 
 public enum IslandType {
-	CLASSIC("Classic Island", Material.GRASS_BLOCK, "has a generator", 1, false, false, Biome.PLAINS, "classic", Environment.NORMAL),
-	FOUR_SEASONS("Four Seasons", Material.MYCELIUM, "special generator results", 1, false, false, new Biome[] {Biome.DESERT, Biome.OCEAN, Biome.SNOWY_TAIGA, Biome.JUNGLE}, "fourSeasons", Environment.NORMAL),
-	FROZEN("Frozen Island", Material.SNOW_BLOCK, "it's cold", 1, false, false, Biome.SNOWY_TUNDRA, "frozen", Environment.NORMAL),
-	DROUGHT("Drought Island", Material.SAND, "desert generator results", 1, false, false, Biome.DESERT, "drought", Environment.NORMAL),
-	NETHER_GATE("Nether Gate Island", Material.NETHERRACK, "allows Nether Portals", 1, false, true, Biome.NETHER_WASTES, "netherGate", new Environment[] {Environment.NORMAL, Environment.NETHER}),
-	POPULATED("Populated Island", Material.COBBLESTONE, "spawns Zombie Villagers", 1, true, false, Biome.TAIGA, "populated", Environment.NORMAL),
-	SWAMP_HUT("Swamp Hut Island", Material.PODZOL, "contains a Witch Hut", 1, false, false, Biome.SWAMP, "swampHut", Environment.NORMAL),
-	FORTRESS_GATE("Fortress Gate Island", Material.NETHER_BRICKS, "Nether Gate to a Fortress", 1, false, true, Biome.NETHER_WASTES, "fortressGate", new Environment[] {Environment.NORMAL, Environment.NETHER}),
-	OCEAN_MONUMENT("Ocean Monument Island", Material.SEA_LANTERN, "contains an Ocean Monument", 1, false, false, Biome.DEEP_OCEAN, "oceanMonument", Environment.NORMAL);
-	//FOUR_SEASONS("Four Seasons", Material.MYCELIUM, false, new Biome[]{Biome.OCEAN, Biome.SNOWY_TUNDRA, Biome.DESERT, Biome.SWAMP}, new String[]{"world_fourSeasons"}),
+	CLASSIC("Classic Island", Material.GRASS_BLOCK, "has a generator", 16, false, false, Biome.PLAINS, "classic", Environment.NORMAL),
+	FROZEN("Frozen Island", Material.SNOW_BLOCK, "it's cold", 32, false, false, Biome.SNOWY_TUNDRA, "frozen", Environment.NORMAL),
+	DROUGHT("Drought Island", Material.SAND, "desert generator results", 32, false, false, Biome.DESERT, "drought", Environment.NORMAL),
+	FOUR_SEASONS("Four Seasons", Material.MYCELIUM, "special generator results", 96, false, false, new Biome[] {Biome.DESERT, Biome.OCEAN, Biome.SNOWY_TAIGA, Biome.JUNGLE}, "fourSeasons", Environment.NORMAL),
+	NETHER_GATE("Nether Gate Island", Material.NETHERRACK, "allows Nether Portals", 96, false, true, Biome.NETHER_WASTES, "netherGate", new Environment[] {Environment.NORMAL, Environment.NETHER}),
+	//POPULATED("Populated Island", Material.COBBLESTONE, "spawns Zombie Villagers", 192, true, false, Biome.TAIGA, "populated", Environment.NORMAL),
+	SWAMP_HUT("Swamp Hut Island", Material.PODZOL, "contains a Witch Hut", 192, false, false, Biome.SWAMP, "swampHut", Environment.NORMAL),
+	FORTRESS_GATE("Fortress Gate Island", Material.NETHER_BRICKS, "Nether Gate to a Fortress", 192, false, true, Biome.NETHER_WASTES, "fortressGate", new Environment[] {Environment.NORMAL, Environment.NETHER}),
+	OCEAN_MONUMENT("Ocean Monument Island", Material.SEA_LANTERN, "contains an Ocean Monument", 192, false, false, Biome.DEEP_OCEAN, "oceanMonument", Environment.NORMAL);
 	//END_PORTAL("End Portal", Material.END_STONE, false, false, Biome.THE_END, new String[] {"world_endPortal", "end_endPortal"});
 
 	private final String name;

@@ -17,6 +17,7 @@ import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.versuchdrei.datamanager.DataManager;
@@ -41,7 +42,11 @@ public class IslandManager {
 	private static final String WORLD_DIR = "worlds/";
 	private static final String ISLAND_DIR = "islands/";
 	
-	private static final String WORLD_HUB_NAME = "world";
+	public static final String WORLD_HUB_NAME = "world";
+	
+	public static final String DATA_KEY_DEFAULT_ISLAND = "defaultisland";
+	
+	public static final String METADATA_KEY_DEFAULT_ISLAND = "defaultisland";
 	
 	public static boolean createIsland(final Main plugin, final Player player, final IslandType type) {
 		final String id = "" + new Date().getTime();
@@ -137,6 +142,30 @@ public class IslandManager {
 		}
 		
 		return worlds;
+	}
+	
+	public static void loadDefaultIsland(final Player player) {
+		Main.getCurrent().ifPresent(plugin -> player.setMetadata(IslandManager.METADATA_KEY_DEFAULT_ISLAND,
+				new FixedMetadataValue(plugin, DataManager.Players.getString(player,Main.PLUGIN_KEY, IslandManager.DATA_KEY_DEFAULT_ISLAND, ""))));
+	}
+	
+	public static void enterDefaultOrHub(final Player player) {
+		final Optional<Main> optionalPlugin = Main.getCurrent();
+		if(optionalPlugin.isPresent()) {
+			final Optional<String> optionalDefaultIsland = MetadataUtils.getMetadata(optionalPlugin.get(), player, IslandManager.METADATA_KEY_DEFAULT_ISLAND, String.class);
+			if(optionalDefaultIsland.isPresent()) {
+				final String defaultIsland = optionalDefaultIsland.get();
+				if(DataManager.Groups.getGroups(player, Main.PLUGIN_KEY).orElse(new ArrayList<>(0)).contains(defaultIsland)){
+					IslandManager.enterIsland(player, IslandData.getData(defaultIsland));
+				} else {
+					IslandManager.enterHub(player);
+				}
+			} else {
+				enterHub(player);
+			}
+		} else {
+			enterHub(player);
+		}
 	}
 	
 	public static void enterHub(final Player player) {
