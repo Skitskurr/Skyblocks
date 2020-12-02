@@ -8,7 +8,10 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.WanderingTrader;
@@ -16,6 +19,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.MerchantRecipe;
@@ -104,6 +108,50 @@ public class EventListener implements Listener{
 		
 		for(final Player player: trader.getWorld().getPlayers()) {
 			player.sendMessage(ChatColor.YELLOW + "A Wandering Trader is visiting your island!");
+		}
+	}
+	
+	@EventHandler
+	public void onExplode(final EntityExplodeEvent event) {
+		if(event.getEntityType() != EntityType.PRIMED_TNT) {
+			return;
+		}
+		
+		event.setCancelled(true);
+		
+		final Location location = event.getEntity().getLocation();
+		
+		final Material locType = location.getBlock().getType();
+		if(locType == Material.WATER || locType == Material.LAVA) {
+			return;
+		}
+		
+		final World world = location.getWorld();
+		final int blockX = location.getBlockX();
+		final int blockY = location.getBlockY();
+		final int blockZ = location.getBlockZ();
+		
+		int x = blockX - 1;
+		int y = blockY - 1;
+		int z = blockZ - 1;
+		
+		while(z < blockZ + 2) {
+			if(y >= 0 && y < world.getMaxHeight()) {
+				final Block block = world.getBlockAt(x, y, z);
+				final Material type = block.getType();
+				if(type.isBlock() && type.getBlastResistance() <= 10) {
+					block.breakNaturally();
+				}
+			}
+			
+			// nested loops are expensive, so we do this stuff instead
+			if(++x == blockX + 2) {
+				x = blockX - 1;
+				if(++y == blockY + 2) {
+					y = blockY - 1;
+					z++;
+				}
+			}
 		}
 	}
 

@@ -63,6 +63,7 @@ public class IslandMemberMenuItem extends MenuItem{
 		if(this.data.getRank(player) > rank) {
 			lore.add("§7right click to kick");
 		}
+		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
 	}
