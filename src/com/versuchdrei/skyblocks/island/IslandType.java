@@ -16,6 +16,7 @@ public enum IslandType {
 	DROUGHT("Drought Island", Material.SAND, "desert generator results", 32, false, false, Biome.DESERT, "drought", Environment.NORMAL),
 	FOUR_SEASONS("Four Seasons", Material.MYCELIUM, "special generator results", 96, false, false, new Biome[] {Biome.DESERT, Biome.OCEAN, Biome.SNOWY_TAIGA, Biome.JUNGLE}, "fourSeasons", Environment.NORMAL),
 	NETHER_GATE("Nether Gate Island", Material.NETHERRACK, "allows Nether Portals", 96, false, true, Biome.NETHER_WASTES, "netherGate", new Environment[] {Environment.NORMAL, Environment.NETHER}),
+	BASALT_GATE("Basalt Gate Island", Material.BASALT, "allows Nether Portals", 96, false, true, Biome.BASALT_DELTAS, "basaltGate", new Environment[] {Environment.NORMAL, Environment.NETHER}),
 	//POPULATED("Populated Island", Material.COBBLESTONE, "spawns Zombie Villagers", 192, true, false, Biome.TAIGA, "populated", Environment.NORMAL),
 	SWAMP_HUT("Swamp Hut Island", Material.PODZOL, "contains a Witch Hut", 192, false, false, Biome.SWAMP, "swampHut", Environment.NORMAL),
 	FORTRESS_GATE("Fortress Gate Island", Material.NETHER_BRICKS, "Nether Gate to a Fortress", 192, false, true, Biome.NETHER_WASTES, "fortressGate", new Environment[] {Environment.NORMAL, Environment.NETHER}),

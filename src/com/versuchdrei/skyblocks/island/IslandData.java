@@ -216,6 +216,7 @@ public class IslandData {
 		
 		addMember(player);
 		invited.remove(uuid);
+		player.sendMessage(ChatColor.GRAY + "You have joined " + ChatColor.DARK_GRAY + this.name + ChatColor.GRAY + ".");
 	}
 	
 	public void promote(final UUID uuid) {
