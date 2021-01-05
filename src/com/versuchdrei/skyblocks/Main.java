@@ -101,6 +101,15 @@ public class Main extends JavaPlugin{
 			return true;
 		}
 		
+		if(command.getLabel().equals("default")) {
+			if(!(sender instanceof Player)) {
+				return true;
+			}
+			
+			IslandManager.enterDefaultOrHub((Player) sender);
+			return true;
+		}
+		
 		if(command.getLabel().equals("setspawn")) {
 			if(!(sender instanceof Player)) {
 				return true;

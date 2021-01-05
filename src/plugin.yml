@@ -13,6 +13,9 @@ commands:
   island:
     description: opens the island menu
     usage: /<command>
+  default:
+    description: teleports you to your default island
+    usage: /<command>
   setspawn:
     description: sets the spawn of the island you're in
     usage: /<command>
